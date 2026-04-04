@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3929145539433800032}
   - component: {fileID: 2684904825973801135}
+  - component: {fileID: 8091487184516254521}
   m_Layer: 0
   m_Name: State-Driven Camera
   m_TagString: Untagged
@@ -72,30 +73,28 @@ MonoBehaviour:
   CustomBlends: {fileID: 11400000, guid: ac06d294f0e26a14f9ff13741a6d2cdd, type: 2}
   AnimatedTarget: {fileID: 0}
   LayerIndex: 0
-  Instructions:
-  - FullHash: 256545655
-    Camera: {fileID: 2060399862386609724}
-    ActivateAfter: 0
-    MinDuration: 0
-  - FullHash: -397766897
-    Camera: {fileID: 2299509081743359952}
-    ActivateAfter: 1
-    MinDuration: 0
-  - FullHash: -725336713
-    Camera: {fileID: 3255054323933796393}
-    ActivateAfter: 0.5
-    MinDuration: 0
-  HashOfParent:
-  - Hash: -397766897
-    HashOfParent: 756556552
-  - Hash: 256545655
-    HashOfParent: 756556552
-  - Hash: -725336713
-    HashOfParent: 756556552
-  - Hash: -1752896643
-    HashOfParent: 756556552
+  Instructions: []
+  HashOfParent: []
   m_LegacyLookAt: {fileID: 0}
   m_LegacyFollow: {fileID: 0}
+--- !u!114 &8091487184516254521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3709916694492248257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc7ef8cea82160c4a85ddec33b88e839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StateDrivenCameraManager
+  animators:
+  - {fileID: 0}
+  - {fileID: 0}
+  idleCamera: {fileID: 2299509081743359952}
+  runCamera: {fileID: 2060399862386609724}
+  ladderCamera: {fileID: 3255054323933796393}
 --- !u!1 &5216951905829496403
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,6 +107,7 @@ GameObject:
   - component: {fileID: 2060399862386609724}
   - component: {fileID: 1367225006752110107}
   - component: {fileID: 805863013564358611}
+  - component: {fileID: 5934446803419396142}
   m_Layer: 0
   m_Name: Run Camera
   m_TagString: Untagged
@@ -124,7 +124,7 @@ Transform:
   m_GameObject: {fileID: 5216951905829496403}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8504896, y: -3.3339996, z: -10}
+  m_LocalPosition: {x: -6.2162323, y: -3.3160596, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -224,6 +224,21 @@ MonoBehaviour:
     MaxWindowSize: 0
     Padding: 0
   m_LegacyMaxWindowSize: -2
+--- !u!114 &5934446803419396142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5216951905829496403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2d4cfdf56b2fe547982ccb535ea221c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RunCameraManager
+  listTransforms:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &6980243267681353933
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,6 +251,7 @@ GameObject:
   - component: {fileID: 3255054323933796393}
   - component: {fileID: 3077169580807970498}
   - component: {fileID: 7990596659127336374}
+  - component: {fileID: 2422875979400267336}
   m_Layer: 0
   m_Name: Ladder Camera
   m_TagString: Untagged
@@ -252,7 +268,7 @@ Transform:
   m_GameObject: {fileID: 6980243267681353933}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8504896, y: -3.3339996, z: -10}
+  m_LocalPosition: {x: -6.2162323, y: -3.3160596, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -283,7 +299,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 5.8
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -352,6 +368,21 @@ MonoBehaviour:
     MaxWindowSize: 0
     Padding: 0
   m_LegacyMaxWindowSize: -2
+--- !u!114 &2422875979400267336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6980243267681353933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0a83dc5fd2629f48a84955b30765930, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LadderCameraManager
+  listTransforms:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &9070063807474813460
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,6 +395,7 @@ GameObject:
   - component: {fileID: 2299509081743359952}
   - component: {fileID: 295297015366215380}
   - component: {fileID: 8999625151525130583}
+  - component: {fileID: 6721970901666142776}
   m_Layer: 0
   m_Name: Idle Camera
   m_TagString: Untagged
@@ -380,7 +412,7 @@ Transform:
   m_GameObject: {fileID: 9070063807474813460}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8504896, y: -3.3339996, z: -10}
+  m_LocalPosition: {x: -6.2162323, y: -3.3160596, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -480,3 +512,18 @@ MonoBehaviour:
     MaxWindowSize: 0
     Padding: 0
   m_LegacyMaxWindowSize: -2
+--- !u!114 &6721970901666142776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9070063807474813460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe665f453420de47a62116d794c0fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IdleCameraManager
+  listTransforms:
+  - {fileID: 0}
+  - {fileID: 0}
