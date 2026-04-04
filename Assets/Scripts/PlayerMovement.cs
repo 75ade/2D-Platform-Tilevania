@@ -1,5 +1,4 @@
-using UnityEditor;
-using UnityEditor.Animations;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,9 +7,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float jumpSpeed = 5f;
     [SerializeField] float climbSpeed = 5f;
+    [SerializeField] float rollSpeed = 5f;
+    [SerializeField] float rollDuration = 0.7f;
     [SerializeField] Vector2 deathKick = new Vector2(10f, 20f);
     [SerializeField] GameObject bullet;
+    [SerializeField] GameObject arrow;
     [SerializeField] Transform gun;
+
+    [SerializeField] float shootingArrowAnimationDuration = 0.5f;
+    [SerializeField] float rollCoolDown = 2f;
 
     Rigidbody2D myRigidbody;
     Vector2 moveInput;
@@ -19,6 +24,10 @@ public class PlayerMovement : MonoBehaviour
     float gravityScaleAtStart;
     BoxCollider2D myFeetCollider;
     bool isAlive = true;
+
+    bool isRolling = false;
+    bool canRoll = true;
+    float rollDirection;
 
     void Start()
     {
@@ -43,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
         if(!isAlive) { return; }
         
         moveInput = value.Get<Vector2>();
-        // Debug.Log(moveInput);
+        Debug.Log("Detect OnMove");
     }
 
     void OnJump(InputValue value)
@@ -62,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
     void Run()
     {
         Vector2 playerVelocity = new Vector2(moveInput.x * moveSpeed, myRigidbody.linearVelocity.y);
+        // Debug.Log($"LinearVelocity.y: {myRigidbody.linearVelocity.y} , {myRigidbody.linearVelocityY}");
         myRigidbody.linearVelocity = playerVelocity;
 
         bool hasHorizontalSpeed = Mathf.Abs(myRigidbody.linearVelocity.x) > Mathf.Epsilon;
@@ -97,17 +107,65 @@ public class PlayerMovement : MonoBehaviour
     void OnAttack()
     {
         if (!isAlive)   { return; }
-        Instantiate(bullet, gun.position, transform.rotation);
+        // Instantiate(bullet, gun.position, transform.rotation);
+
+        StartCoroutine(ShootingArrow());
+    }
+
+    IEnumerator ShootingArrow()
+    {
+        myAnimator.SetBool("isShooting", true);
+        Instantiate(arrow, gun.position, Quaternion.identity);
+
+        yield return new WaitForSeconds(shootingArrowAnimationDuration);
+
+        myAnimator.SetBool("isShooting", false);
     }
 
     void Die()
     {
         if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards")) ||
-            myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards"))){
+            myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards")))
+        {
             isAlive = false;
             myAnimator.SetTrigger("Dying");
             myRigidbody.linearVelocity = deathKick;
             FindAnyObjectByType<GameSession>().ProcessPlayerDeath();
         }
+    }
+
+    void OnSprint()
+    {
+        if (!isAlive)   return;
+
+        if (canRoll && !isRolling)
+        {
+            StartCoroutine(Rolling());
+        }
+    }
+
+    IEnumerator Rolling()
+    {
+        isRolling = true;
+        canRoll = false;
+        rollDirection = transform.localScale.x;
+        myAnimator.SetTrigger("Rolling");
+
+        float elapsed = 0f;
+        
+        while (elapsed < rollDuration)
+        {
+            myRigidbody.linearVelocity = new Vector2(rollDirection * rollSpeed, myRigidbody.linearVelocity.y);
+            
+            elapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        isRolling = false;
+        
+        yield return new WaitForSeconds(rollCoolDown);
+
+        canRoll = true;
     }
 }

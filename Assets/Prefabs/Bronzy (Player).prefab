@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 65b6f04aca2f6d443bac7d776f81c6d1, type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &5684844216437811649
@@ -229,9 +229,14 @@ MonoBehaviour:
   moveSpeed: 7
   jumpSpeed: 25
   climbSpeed: 5
+  rollSpeed: 5
+  rollDuration: 0.4
   deathKick: {x: 10, y: 20}
   bullet: {fileID: 6275218608506130410, guid: c9c561009768dbe48bb85eac075cad38, type: 3}
+  arrow: {fileID: 9103930609317867336, guid: ee8b27c1a165073478eb41fad08c4076, type: 3}
   gun: {fileID: 2089700571949560688}
+  shootingArrowAnimationDuration: 0.5
+  rollCoolDown: 1
 --- !u!61 &3619880731786493918
 BoxCollider2D:
   m_ObjectHideFlags: 0

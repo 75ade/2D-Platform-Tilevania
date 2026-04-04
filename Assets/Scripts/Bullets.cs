@@ -14,7 +14,7 @@ public class Bullets : MonoBehaviour
         player = FindFirstObjectByType<PlayerMovement>();
         xSpeed = player.transform.localScale.x * bulletSpeed;
     }
-
+    
     // Update is called once per frame
     void Update()
     {
